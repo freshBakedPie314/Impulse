@@ -1,0 +1,5 @@
+# ninja log v5
+11	99	7691124171439507	src/App/CMakeFiles/PhysicsApp.dir/App.cpp.obj	dd06926ae4daea79
+3	608	7691124176498481	src/Systems/RendererSystem/CMakeFiles/RendererSystem.dir/RendererSystem.cpp.obj	6e741c13e3c9adbe
+693	1634	7691124186517082	bin/PhysicsApp.exe	9e3ef914341aa1
+608	693	7691124177348418	src/Systems/RendererSystem/RendererSystem.lib	9d4abad3825d97c4

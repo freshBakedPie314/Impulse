@@ -1,0 +1,4 @@
+# ninja log v5
+8	285	7691123977293511	src/App/CMakeFiles/PhysicsApp.dir/App.cpp.obj	664d9a1c614d6b77
+2	633	7691123980775208	src/Systems/RendererSystem/CMakeFiles/RendererSystem.dir/RendererSystem.cpp.obj	472be54bed5ea040
+633	703	7691123981447168	src/Systems/RendererSystem/RendererSystem.lib	74384d41b4f7fe30

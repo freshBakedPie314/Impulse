@@ -1,0 +1,15 @@
+add_library(RendererSystem STATIC RendererSystem.cpp)
+
+target_include_directories(RendererSystem PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/include
+    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/include
+)
+
+target_link_libraries(RendererSystem PUBLIC
+    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/lib/glew32s.lib
+    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/lib/glfw3.lib
+    opengl32.lib
+)
+
+target_compile_definitions(RendererSystem PUBLIC GLEW_STATIC)
