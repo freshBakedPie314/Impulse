@@ -1,6 +1,4 @@
 #include "VertexBuffer.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 VertexBuffer::VertexBuffer(float vertices[] , unsigned int size)
 {

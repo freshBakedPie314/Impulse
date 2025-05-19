@@ -3,14 +3,13 @@ add_library(RendererSystem STATIC ${RENDER_SOURCES})
 
 target_include_directories(RendererSystem PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/include
-    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/include
-    ${CMAKE_SOURCE_DIR}/src/Entities
+    ${GLEW_INCLUDE_DIR}
+    ${GLFW_INCLUDE_DIR}
 )
 
 target_link_libraries(RendererSystem PUBLIC
-    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/lib/glew32s.lib
-    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/lib/glfw3.lib
+    ${GLEW_LIB}
+    ${GLFW_LIB}
     opengl32.lib
 )
 

@@ -2,15 +2,15 @@ file(GLOB_RECURSE UTILITY_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/
 add_library(Utilities STATIC ${UTILITY_SOURCES})
 
 target_include_directories(Utilities PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/include
-    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/include
+    ${GLEW_INCLUDE_DIR}
+    ${GLFW_INCLUDE_DIR}
 )
 
 target_link_libraries(Utilities PUBLIC
-    ${CMAKE_SOURCE_DIR}/dependencies/GLEW/lib/glew32s.lib
-    ${CMAKE_SOURCE_DIR}/dependencies/GLFW/lib/glfw3.lib
+    ${GLEW_LIB}
+    ${GLFW_LIB}
     opengl32.lib
+    glu32.lib
 )
 
 target_compile_definitions(Utilities PUBLIC GLEW_STATIC)

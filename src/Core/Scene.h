@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include <../Entities/Entity.h>
+#include "../Entities/Entity.h"
 
 class Scene {
 private:
