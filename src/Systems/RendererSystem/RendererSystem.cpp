@@ -1,39 +1,42 @@
 #include "RendererSystem.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 
-void InitWindow() {
-	if (!glfwInit()) {
+GLFWwindow* InitWindow() 
+{
+
+	if (!glfwInit()) 
+	{
 		std::cerr << "GLFW Init Failed!\n";
-		return;
+		return nullptr;
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	GLFWwindow* window = glfwCreateWindow(800, 600, "PhysicsEngine", nullptr, nullptr);
-	if (!window) {
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Impulse", nullptr, nullptr);
+	if (!window) 
+	{
 		std::cerr << "Window Creation Failed!\n";
+		glfwDestroyWindow(window);
 		glfwTerminate();
-		return;
+		return nullptr;
 	}
-
 	glfwMakeContextCurrent(window);
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		std::cerr << "GLEW Init Failed!\n";
-		return;
+
+	if (glewInit() != GLEW_OK) 
+	{
+		std::cout << "GLEW Init Failed!\n";
+		glfwDestroyWindow(window);
+		glfwTerminate();
+		return nullptr;
 	}
 
-	while (!glfwWindowShouldClose(window)) {
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+	return window;
+}
 
-	glfwDestroyWindow(window);
-	glfwTerminate();
+void RendererSystem::Update(Scene* scene)
+{
+	for (auto a : scene->GetEntities())
+	{
+		a->GetVBO()->Bind();
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
 }
