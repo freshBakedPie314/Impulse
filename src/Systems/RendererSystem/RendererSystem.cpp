@@ -34,7 +34,8 @@ void RendererSystem::Update(Scene* scene)
 {
 	for (auto a : scene->GetEntities())
 	{
-		a->GetVBO()->Bind();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		a->GetVAO()->Bind();
+		a->GetShader()->Bind();
+		glDrawElements(GL_TRIANGLES, a->GetIBO()->Size() , GL_UNSIGNED_INT, nullptr);
 	}
 }

@@ -1,12 +1,15 @@
 #include "RendererSystem.h"
 #include "Scene.h"
-
+#include <filesystem>
 int main() 
 {
+
+	std::cout << "Working directory: " << std::filesystem::current_path() << std::endl;
+
 	GLFWwindow* window = InitWindow();
 	
 	Scene* currentScene = new Scene();
-	Entity* a = new Entity;
+	Entity* a = new Entity(Shape::TRIANGLE);
 	currentScene->AddEntity(a);
 	RendererSystem* rendererSystem = new RendererSystem();
 
