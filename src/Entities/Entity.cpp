@@ -12,7 +12,8 @@ Entity::Entity(Shape shape)
 	m_VAO->AddBuffer(*m_VBO, layout);
 	m_IBO = std::make_unique<IndexBuffer>(indices.data(), indices.size());
 
-	m_Shader = std::make_unique<Shader>("res/Default_Shader.shader");
+	std::string shaderPath = (shape == Shape::CIRCLE) ? "res/Default_Shader_Circle.shader" : "res/Default_Shader.shader";
+	m_Shader = std::make_unique<Shader>(shaderPath);
 }
 
 Entity::~Entity()
@@ -36,7 +37,7 @@ std::vector<float> Entity::GetVetices(Shape shape)
 			 0.5f, -0.5f,  0.0f
 		};
 	}
-	else if (shape == Shape::SQUARE)
+	else if (shape == Shape::SQUARE || shape == Shape::CIRCLE)
 	{
 		return {
 			//  x      y      z
@@ -45,6 +46,10 @@ std::vector<float> Entity::GetVetices(Shape shape)
 			 0.5f,  0.5f,  0.0f,
 			-0.5f,  0.5f,  0.0f
 		};
+	}
+	else
+	{
+		return {};
 	}
 }
 
@@ -56,11 +61,16 @@ std::vector<unsigned int> Entity::GetIndices(Shape shape)
 			0 , 1 , 2
 		};
 	}
-	else if (shape == Shape::SQUARE)
+	else if (shape == Shape::SQUARE || shape == Shape::CIRCLE)
 	{
 		return {
 			0 , 1 , 2,
 			2 , 3 , 0
 		};
+	}
+	else
+	{
+		std::cout << "Warning: No Shape Specified" << std::endl;
+		return {};
 	}
 }

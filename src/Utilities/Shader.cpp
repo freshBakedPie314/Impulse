@@ -6,9 +6,6 @@ Shader::Shader(const std::string& filepath)
 	:m_filePath(filepath)
 {
 	ShaderProgramSource src = Shader::ParseShader(m_filePath);
-	std::cout << src.vertexShader << std::endl;
-	std::cout << "---------------\n";
-	std::cout << src.fragmentShader << std::endl;
 	unsigned int shader = CreateShader(src.vertexShader, src.fragmentShader);
 	m_RendererID = shader;
 }
@@ -114,18 +111,21 @@ unsigned int Shader::CreateShader(const std::string vertexShader, const std::str
 
 void Shader::SetUniform4f(std::string uniform_name, float v1 , float v2 , float v3 , float v4)
 {
+	Bind();
 	int location = GetUniformLocation(uniform_name);
 	glUniform4f(location, v1, v2, v3, v4);
 }
 
 void Shader::SetUniform1f(std::string uniform_name, float v1)
 {
+	Bind();
 	int location = GetUniformLocation(uniform_name);
 	glUniform1f(location, v1);
 }
 
 void Shader::SetUniform1i(std::string uniform_name, int v)
 {
+	Bind();
 	int location = GetUniformLocation(uniform_name);
 	glUniform1i(location, v);
 }
@@ -133,8 +133,8 @@ void Shader::SetUniform1i(std::string uniform_name, int v)
 
 int Shader::GetUniformLocation(std::string uniform_name)
 {
-	if(m_uniform_cache.find(uniform_name) != m_uniform_cache.end())
-		return m_uniform_cache[uniform_name];
+ 	if(m_uniform_cache.find(uniform_name) != m_uniform_cache.end())
+ 		return m_uniform_cache[uniform_name];
 	
 	int location = glGetUniformLocation(m_RendererID, uniform_name.c_str());
 	return m_uniform_cache[uniform_name] = location;

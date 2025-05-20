@@ -9,7 +9,8 @@ GLFWwindow* InitWindow()
 		return nullptr;
 	}
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Impulse", nullptr, nullptr);
+	//800, 600
+	GLFWwindow* window = glfwCreateWindow(800, 800, "Impulse", nullptr, nullptr);
 	if (!window) 
 	{
 		std::cerr << "Window Creation Failed!\n";
@@ -26,6 +27,9 @@ GLFWwindow* InitWindow()
 		glfwTerminate();
 		return nullptr;
 	}
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return window;
 }

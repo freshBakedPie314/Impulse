@@ -9,7 +9,8 @@
 
 enum struct Shape {
 	TRIANGLE,
-	SQUARE
+	SQUARE,
+	CIRCLE
 };
 
 class Entity {

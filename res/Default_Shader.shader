@@ -11,8 +11,9 @@ void main()
 #fragment shader
 #version 330 core
 
+uniform vec4 u_color;
 out vec4 Color;
 void main()
 {
-    Color = vec4(1.0f , 0.0f, 0.0f , 1.0f);
+    Color = u_color;
 }
