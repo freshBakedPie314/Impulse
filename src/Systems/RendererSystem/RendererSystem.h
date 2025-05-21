@@ -4,12 +4,10 @@
 #include <iostream>
 #include "../../Core/Scene.h"
 
-GLFWwindow* InitWindow();
-
 class RendererSystem
 {
 private:
-
+	Scene* m_CurrentScene;
 public:
 	void Update(Scene* scene);
 };

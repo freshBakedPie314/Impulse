@@ -15,6 +15,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/Core/Window
     ${CMAKE_SOURCE_DIR}/src/Utilities/Maths
     ${GLEW_INCLUDE_DIR}
     ${GLFW_INCLUDE_DIR}
@@ -23,5 +24,6 @@ include_directories(
 add_subdirectory(src/Utilities)
 add_subdirectory(src/Systems/RendererSystem)
 add_subdirectory(src/Core)
+add_subdirectory(src/Core/Window)
 add_subdirectory(src/Entities)
 add_subdirectory(src/App)
