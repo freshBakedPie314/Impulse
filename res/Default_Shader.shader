@@ -2,10 +2,11 @@
 #version 330 core
 
 layout(location = 0)in vec4 a_Pos;
-
+uniform mat4 u_model;
+uniform mat4 u_view;
 void main()
 {
-    gl_Position = a_Pos;
+    gl_Position = u_view * u_model*a_Pos;
 }
 
 #fragment shader

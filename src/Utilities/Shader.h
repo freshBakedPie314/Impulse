@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-#include "../../dependencies/GLEW/include/GL/glew.h"
-#include "../../dependencies/GLFW/include/GLFW/glfw3.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <Maths.h>
 
 static struct ShaderProgramSource {
 	std::string vertexShader;
@@ -29,5 +30,6 @@ public:
 	void SetUniform4f(std::string uniform_name, float v1, float v2, float v3, float v4);
 	void SetUniform1f(std::string uniform_name, float v1);
 	void SetUniform1i(std::string uniform_name, int v);
+	void SetUniform4mat(std::string uniform_name, mat4 v);
 	int GetUniformLocation(std::string uniform_name);
 };

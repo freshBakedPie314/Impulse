@@ -131,6 +131,13 @@ void Shader::SetUniform1i(std::string uniform_name, int v)
 }
 
 
+void Shader::SetUniform4mat(std::string uniform_name, mat4 v)
+{
+	Bind();
+	int location = GetUniformLocation(uniform_name);
+	glUniformMatrix4fv(location, 1 , GL_FALSE , &v.elements[0]);
+}
+
 int Shader::GetUniformLocation(std::string uniform_name)
 {
  	if(m_uniform_cache.find(uniform_name) != m_uniform_cache.end())

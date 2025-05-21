@@ -13,6 +13,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_GENERATOR_PLATFORM Win32)  # Ensure 32-bit
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/Utilities/Maths
+    ${GLEW_INCLUDE_DIR}
+    ${GLFW_INCLUDE_DIR}
+)
+
 add_subdirectory(src/Utilities)
 add_subdirectory(src/Systems/RendererSystem)
 add_subdirectory(src/Core)

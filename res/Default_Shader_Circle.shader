@@ -3,9 +3,12 @@
 
 layout(location = 0)in vec4 a_Pos;
 out vec2 localPos;
+uniform mat4 u_model;
+uniform mat4 u_view;
+uniform mat4 u_projection;
 void main()
 {
-    gl_Position = a_Pos;
+    gl_Position = u_projection * u_view * u_model * a_Pos;
     localPos = a_Pos.xy;
 }
 
