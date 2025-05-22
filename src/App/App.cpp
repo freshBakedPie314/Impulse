@@ -5,14 +5,19 @@
 
 int main() 
 {
+	std::cout << "Version: Alpha 0.1" << std::endl;
+	
 	GLFWwindow* window = InitWindow();
-
+	std::cout << "Initialized Window" << std::endl;
+	std::cout << "STATUS: OK" << std::endl;
 	int initialWidth, initialHeight;
 	glfwGetFramebufferSize(window, &initialWidth, &initialHeight);
 	
 	Scene* currentScene = new Scene();
 	glfwSetWindowUserPointer(window, currentScene);
-	WindowResizeCallback(window, initialWidth, initialHeight);
+
+	//Set a custom pointer to current scene, useful while setting projection matrix
+	WindowResizeCallback(window, initialWidth, initialHeight); 
 
 	Entity* a = new Entity(Shape::CIRCLE);
 	currentScene->AddEntity(a);

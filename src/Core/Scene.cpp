@@ -3,6 +3,7 @@
 Scene::Scene()
 {
 	vec3 camera = { 0.5f , 0.0f , 1.0f };
+	m_cameraPos = camera;
 	vec3 to = camera;
 	to.z -= 1.0f;
 	m_View = lookAt(camera, to);
