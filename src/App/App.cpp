@@ -2,14 +2,13 @@
 #include "Scene.h"
 #include <filesystem>
 #include <Window.h>
-
+#include "../Components/Transform.h"
 int main() 
 {
 	std::cout << "Version: Alpha 0.1" << std::endl;
 	
 	GLFWwindow* window = InitWindow();
-	std::cout << "Initialized Window" << std::endl;
-	std::cout << "STATUS: OK" << std::endl;
+
 	int initialWidth, initialHeight;
 	glfwGetFramebufferSize(window, &initialWidth, &initialHeight);
 	
@@ -21,15 +20,17 @@ int main()
 
 	Entity* a = new Entity(Shape::CIRCLE);
 	currentScene->AddEntity(a);
+	a->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
 
 	RendererSystem* rendererSystem = new RendererSystem();
 
-	a->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
-
-	vec3 transformation = { 1.0f , 0.0f , 0.0f };
-	mat4 model = createTranformationMatrix(transformation, 0.0f);
-	a->GetShader()->SetUniform4mat("u_model", model);
-
+	a->AddComponent<Transform>("Transform", vec3{0.0f, 1.0f, 0.0f}, vec3{0.0 , 0.0, 0.1f}, vec3{1.0f , 1.0f ,1.0f});
+	//mat4 model = createTranformationMatrix(vec3{ 0.0f , 0.0f, 0.0f }, 0.0f);
+	
+	Entity* b = new Entity(Shape::CIRCLE);
+	currentScene->AddEntity(b);
+	b->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
+	b->AddComponent<Transform>("Transform", vec3{ 2.0f, -1.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
 	while (!glfwWindowShouldClose(window)) 
 	{
 		glClearColor(0.145f, 0.141f, 0.133f, 1.0f);

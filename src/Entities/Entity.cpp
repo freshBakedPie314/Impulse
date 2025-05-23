@@ -21,11 +21,6 @@ Entity::~Entity()
 
 }
 
-void Entity::AddComponent()
-{
-	
-}
-
 std::vector<float> Entity::GetVetices(Shape shape)
 {
 	if (shape == Shape::TRIANGLE)

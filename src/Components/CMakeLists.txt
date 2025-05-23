@@ -1,0 +1,7 @@
+file(GLOB_RECURSE COMPONENT_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+add_library(Components STATIC ${COMPONENT_SOURCES})
+
+target_include_directories(Components PUBLIC 
+	${CMAKE_CURRENT_SOURCE_DIR}
+)

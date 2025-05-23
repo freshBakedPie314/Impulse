@@ -12,6 +12,7 @@ add_custom_command(TARGET Impulse POST_BUILD
 )
 
 target_link_libraries(Impulse PUBLIC Entities)
+target_link_libraries(Impulse PUBLIC Components)
 target_link_libraries(Impulse PUBLIC RendererSystem)
 target_link_libraries(Impulse PUBLIC Core)
 target_link_libraries(Impulse PUBLIC Utilities)
