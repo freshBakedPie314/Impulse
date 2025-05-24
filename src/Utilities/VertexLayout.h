@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <stdexcept>
-#include "../../dependencies/GLEW/include/GL/glew.h"
-#include "../../dependencies/GLFW/include/GLFW/glfw3.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 struct VertexLayoutAttributes {
 	unsigned int count;

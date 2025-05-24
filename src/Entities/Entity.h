@@ -5,13 +5,12 @@
 #include <memory> 
 #include <string> 
 
-#include "../Components/Component.h"
-#include "../Components/Transform.h"
+#include <Components.h>
 
-#include "../Utilities/VertexBuffer.h"
-#include "../Utilities/IndexBuffer.h"
-#include "../Utilities/VertexArray.h"
-#include "../Utilities/Shader.h"
+#include <VertexBuffer.h>
+#include <IndexBuffer.h>
+#include <VertexArray.h>
+#include <Shader.h>
 
 class Transform;
 

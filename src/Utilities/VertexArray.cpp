@@ -1,4 +1,3 @@
-#include "VertexLayout.h"
 #include "VertexArray.h"
 
 VertexArray::VertexArray() : m_RendererID(0)

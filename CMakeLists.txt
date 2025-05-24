@@ -17,7 +17,12 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/Components
     ${CMAKE_SOURCE_DIR}/src/Core/Window
+    ${CMAKE_SOURCE_DIR}/src/Core/InputManager
+    ${CMAKE_SOURCE_DIR}/src/Core/Scene
+    ${CMAKE_SOURCE_DIR}/src/Entities
+    ${CMAKE_SOURCE_DIR}/src/Utilities
     ${CMAKE_SOURCE_DIR}/src/Utilities/Maths
+
     ${GLEW_INCLUDE_DIR}
     ${GLFW_INCLUDE_DIR}
 )
@@ -25,7 +30,9 @@ include_directories(
 add_subdirectory(src/Utilities)
 add_subdirectory(src/Components)
 add_subdirectory(src/Systems/RendererSystem)
-add_subdirectory(src/Core)
+add_subdirectory(src/Systems/PhysicsSystem)
+add_subdirectory(src/Core/Scene)
 add_subdirectory(src/Core/Window)
+add_subdirectory(src/Core/InputManager)
 add_subdirectory(src/Entities)
 add_subdirectory(src/App)

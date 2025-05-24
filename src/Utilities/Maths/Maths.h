@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 #include <cmath>
-#define PI 3.14159
-//Vectors
 
+#define PI 3.14159
+
+//Vectors
 struct vec3 {
 	float x;
 	float y;

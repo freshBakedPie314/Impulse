@@ -11,8 +11,13 @@ add_custom_command(TARGET Impulse POST_BUILD
     $<TARGET_FILE_DIR:Impulse>/res
 )
 
-target_link_libraries(Impulse PUBLIC Entities)
-target_link_libraries(Impulse PUBLIC Components)
-target_link_libraries(Impulse PUBLIC RendererSystem)
-target_link_libraries(Impulse PUBLIC Core)
-target_link_libraries(Impulse PUBLIC Utilities)
+target_link_libraries(Impulse PUBLIC 
+    Entities
+    Components
+    RendererSystem
+    PhysicsSystem
+    Scene
+    Utilities
+    InputManager
+    Window
+)

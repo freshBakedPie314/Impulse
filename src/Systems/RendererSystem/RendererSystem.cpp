@@ -1,5 +1,4 @@
 #include "RendererSystem.h"
-#include <Component.h>
 
 void RendererSystem::Update(Scene* scene)
 {	

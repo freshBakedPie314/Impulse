@@ -1,7 +1,7 @@
 file(GLOB_RECURSE CORE_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-add_library(Core STATIC ${CORE_SOURCES})
+add_library(Scene STATIC ${CORE_SOURCES})
 
-target_include_directories(Core PUBLIC 
+target_include_directories(Scene PUBLIC 
 	${CMAKE_CURRENT_SOURCE_DIR}
 )

@@ -1,19 +1,19 @@
 #pragma once
-#include <vector>
-#include <iostream>
-#include "../Entities/Entity.h"
+#include <Entity.h>
 
 class Scene {
 private:
-	std::vector<Entity*> entities;
+	std::unordered_map<std::string, std::unique_ptr<Entity>> m_entities;
 	mat4 m_Projection;
 	mat4 m_View;
 	vec3 m_cameraPos;
 public:
 	Scene();
 	~Scene();
-	void AddEntity(Entity* e);
-	std::vector<Entity*> inline GetEntities() const { return entities; }
+	void AddEntity(std::string name, std::unique_ptr<Entity>);
+
+	std::vector<Entity*> Scene::GetEntities() const;
+	Entity* Scene::GetEntitiy(std::string name) const;
 
 	inline void SetProjectionMat(mat4 projectionMat) { m_Projection = projectionMat; }
 	inline mat4 GetProjectionMat() const { return m_Projection; }

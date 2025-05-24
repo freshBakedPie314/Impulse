@@ -3,6 +3,9 @@
 
 class Entity;
 
+class Transform;
+class Rigidbody;
+
 class Component {
 public:
 	std::string m_name;
@@ -11,8 +14,6 @@ public:
 	Component(const std::string& name) : m_name(name), m_Owner(nullptr) {};
 	virtual ~Component() = default;
 
-	
-	
 	virtual void OnAddedToEntity(Entity* owner) { m_Owner = owner; }
 };
 

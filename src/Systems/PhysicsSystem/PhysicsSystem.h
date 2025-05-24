@@ -6,10 +6,9 @@
 #include <Scene.h>
 #include <Components.h>
 
-class RendererSystem
-{
+class PhysicsSystem {
 private:
-	Scene* m_CurrentScene;
+
 public:
-	void Update(Scene* scene);
+	void Update(Scene* scene , float deltaTime);
 };
