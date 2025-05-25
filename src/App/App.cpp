@@ -19,16 +19,19 @@ int main()
 	std::unique_ptr<PhysicsSystem> physicsSystem = std::make_unique<PhysicsSystem>();
 
 	
-	std::unique_ptr <Entity> a = std::make_unique<Entity>(Shape::CIRCLE);	
+	std::unique_ptr <Entity> a = std::make_unique<Entity>(Shape::SQUARE);	
 	a->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
-	a->AddComponent<Transform>("Transform", vec3{0.0f, 3.0f, 0.0f}, vec3{0.0 , 0.0, 0.1f}, vec3{1.0f , 1.0f ,1.0f});
+	a->AddComponent<Transform>("Transform", vec3{0.0f, 0.0f, 0.0f}, vec3{0.0 , 0.0, 0.1f}, vec3{1.0f , 1.0f ,1.0f});
 	a->AddComponent<Rigidbody>("Rigidbody");
+	a->GetComponent<Rigidbody>("Rigidbody")->m_UseGravity = false;
+	a->AddComponent<Collider>("Collider");
 	currentScene->AddEntity("A", std::move(a));
 
-	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::CIRCLE);
+	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::SQUARE);
 	b->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
-	b->AddComponent<Transform>("Transform", vec3{ 2.0f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
+	b->AddComponent<Transform>("Transform", vec3{ 0.9f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
 	b->AddComponent<Rigidbody>("Rigidbody");
+	b->AddComponent<Collider>("Collider");
 	currentScene->AddEntity("B", std::move(b));
 
 	float lastFrameTime = 0.0f;

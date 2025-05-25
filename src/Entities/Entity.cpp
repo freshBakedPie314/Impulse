@@ -4,7 +4,7 @@ Entity::Entity(Shape shape)
 {
 	std::vector<float> vertices = GetVetices(shape);
 	std::vector<unsigned int> indices = GetIndices(shape);;
-
+	m_localVertices = vertices;
 	m_VBO = std::make_unique<VertexBuffer>(vertices.data(), sizeof(float) * vertices.size());
 	VertexLayout layout;
 	layout.Push<float>(3);

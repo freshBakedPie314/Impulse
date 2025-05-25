@@ -27,6 +27,7 @@ private:
 	std::unique_ptr<VertexArray> m_VAO;
 	std::unique_ptr<IndexBuffer> m_IBO;
 	std::unique_ptr<Shader> m_Shader;
+	std::vector<float> m_localVertices;
 
 public:
 	Entity(Shape shape);
@@ -38,6 +39,7 @@ public:
 	VertexBuffer* GetVBO() const { return m_VBO.get(); }
 	VertexArray* GetVAO() const { return m_VAO.get(); }
 	IndexBuffer* GetIBO() const { return m_IBO.get(); }
+	std::vector<float> GetVertices() const { return m_localVertices; }
 	Shader* GetShader() const { return m_Shader.get(); }
 
 	template <typename T, typename... Args>

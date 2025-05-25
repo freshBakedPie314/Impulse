@@ -9,6 +9,84 @@ struct vec3 {
 	float x;
 	float y;
 	float z;
+	vec3() : x(0.0f), y(0.0f), z(0.0f) {}
+	vec3(float x_val, float y_val, float z_val) : x(x_val), y(y_val), z(z_val) {}
+
+	float magnitude() const
+	{
+		return std::sqrt((x * x) + (y * y) + (z * z));
+	}
+
+	float length() const
+	{
+		return magnitude();
+	}
+
+	vec3 operator-(vec3 other) const
+	{
+		return vec3(x - other.x, y - other.y, z - other.z);
+	}
+
+	vec3 operator*(float scalar) const {
+		return vec3(x * scalar, y * scalar, z * scalar);
+	}
+
+	vec3& operator*=(float scalar) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		return *this;
+	}
+
+	vec3 operator*(const vec3& other) const {
+		return vec3(x * other.x, y * other.y, z * other.z);
+	}
+
+	vec3& operator*=(const vec3& other) {
+		x *= other.x;
+		y *= other.y;
+		z *= other.z;
+		return *this;
+	}
+
+	vec3& operator+=(const vec3& other) {
+		x += other.x;
+		y += other.y;
+		z += other.z;
+		return *this;
+	}
+
+	vec3& operator+(const vec3& other) {
+		return vec3(x + other.x, y + other.y, z + other.z);
+	}
+
+	bool operator==(const vec3& other)
+	{
+		return (x == other.x && y == other.y && z == other.z);
+	}
+	
+	bool operator!=(const vec3& other)
+	{
+		return (x != other.x || y != other.y || z != other.z);
+	}
+
+	bool operator<(const vec3 & other)
+	{
+		return magnitude() < other.magnitude();
+	}
+
+	bool operator>(const vec3& other)
+	{
+		return magnitude() > other.magnitude();
+	}
+};
+
+struct vec4 {
+	float x, y, z, w;
+	vec4(float x_ = 0.0f, float y_ = 0.0f, float z_ = 0.0f, float w_ = 0.0f) : x(x_), y(y_), z(z_), w(w_) {}
+	
+
+	vec3 toVec3() const { return vec3(x, y, z); }
 };
 
 //Matrices
@@ -21,6 +99,31 @@ struct mat4 {
 			elements[i] = 0;
 		}
 	};
+
+	//mat4 * vec4
+	vec4 operator*(const vec4& v) const {
+		vec4 result;
+		result.x = elements[0] * v.x + elements[4] * v.y + elements[8] * v.z + elements[12] * v.w;
+		result.y = elements[1] * v.x + elements[5] * v.y + elements[9] * v.z + elements[13] * v.w;
+		result.z = elements[2] * v.x + elements[6] * v.y + elements[10] * v.z + elements[14] * v.w;
+		result.w = elements[3] * v.x + elements[7] * v.y + elements[11] * v.z + elements[15] * v.w;
+		return result;
+	}
+
+	//mat4 * mat4
+	mat4 operator*(const mat4& other) const {
+		mat4 result;
+		for (int row = 0; row < 4; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				float sum = 0.0f;
+				for (int i = 0; i < 4; ++i) {
+					sum += this->elements[i * 4 + row] * other.elements[col * 4 + i];
+				}
+				result.elements[col * 4 + row] = sum;
+			}
+		}
+		return result;
+	}
 };
 
 //Matrix Utilities
