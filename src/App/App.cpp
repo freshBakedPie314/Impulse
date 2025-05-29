@@ -18,21 +18,39 @@ int main()
 	std::unique_ptr<RendererSystem> rendererSystem = std::make_unique<RendererSystem>();
 	std::unique_ptr<PhysicsSystem> physicsSystem = std::make_unique<PhysicsSystem>();
 
-	
-	std::unique_ptr <Entity> a = std::make_unique<Entity>(Shape::SQUARE);	
+	std::unique_ptr <Entity> a = std::make_unique<Entity>(Shape::TRIANGLE);
+	a->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
+	a->AddComponent<Transform>("Transform", vec3{ 0.0f, 0.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
+	a->AddComponent<Rigidbody>("Rigidbody");
+	a->GetComponent<Rigidbody>("Rigidbody")->m_UseGravity = false;
+	a->AddComponent<Collider>("Collider");
+	Transform* rb = a->GetComponent<Transform>("Transform");
+	currentScene->AddEntity("A", std::move(a));
+
+	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::SQUARE);
+	b->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
+	b->AddComponent<Transform>("Transform", vec3{ 0.8f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
+	b->AddComponent<Rigidbody>("Rigidbody");
+	b->AddComponent<Collider>("Collider");
+	currentScene->AddEntity("B", std::move(b));
+
+	/*std::unique_ptr <Entity> a = std::make_unique<Entity>(Shape::SQUARE);
 	a->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
 	a->AddComponent<Transform>("Transform", vec3{0.0f, 0.0f, 0.0f}, vec3{0.0 , 0.0, 0.1f}, vec3{1.0f , 1.0f ,1.0f});
 	a->AddComponent<Rigidbody>("Rigidbody");
 	a->GetComponent<Rigidbody>("Rigidbody")->m_UseGravity = false;
 	a->AddComponent<Collider>("Collider");
+	Transform* rb = a->GetComponent<Transform>("Transform");
 	currentScene->AddEntity("A", std::move(a));
 
 	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::SQUARE);
 	b->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
-	b->AddComponent<Transform>("Transform", vec3{ 0.9f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
+	b->AddComponent<Transform>("Transform", vec3{ -2.0f, 0.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
 	b->AddComponent<Rigidbody>("Rigidbody");
+	b->GetComponent<Rigidbody>("Rigidbody")->m_UseGravity = false;
+	b->GetComponent<Rigidbody>("Rigidbody")->m_Velocity = { 2.0f, 0.0f, 0.0f };
 	b->AddComponent<Collider>("Collider");
-	currentScene->AddEntity("B", std::move(b));
+	currentScene->AddEntity("B", std::move(b));*/
 
 	float lastFrameTime = 0.0f;
 	float deltaTime = 0.0f;
@@ -53,6 +71,7 @@ int main()
 		if(inputManager->GetSimulationState() == SimulationState::PLAYED) 
 			physicsSystem->Update(currentScene.get(), deltaTime);
 		
+		//std::cout << rb->m_Position.y << std::endl;
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

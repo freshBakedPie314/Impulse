@@ -27,8 +27,19 @@ struct vec3 {
 		return vec3(x - other.x, y - other.y, z - other.z);
 	}
 
+	vec3& operator-=(const vec3& other) {
+		x -= other.x;
+		y -= other.y;
+		z -= other.z;
+		return *this;
+	}
+
 	vec3 operator*(float scalar) const {
 		return vec3(x * scalar, y * scalar, z * scalar);
+	}
+
+	vec3 operator/(float scalar) const {
+		return vec3(x / scalar, y / scalar, z / scalar);
 	}
 
 	vec3& operator*=(float scalar) {
@@ -149,6 +160,8 @@ inline vec3 normalize(vec3 a)
 {
 	float dist = (a.x * a.x) + (a.y * a.y) + (a.z * a.z);
 	dist = sqrtf(dist);
+
+	if (dist == 0.0f) return { 0.0f , 0.0f , 0.0f};
 	a.x = a.x / dist;
 	a.y = a.y / dist;
 	a.z = a.z / dist;

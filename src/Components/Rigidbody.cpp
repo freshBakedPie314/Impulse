@@ -4,20 +4,16 @@ void Rigidbody::PhysicsUpdate(Transform* transform, float deltaTime)
 {
 	if (m_UseGravity)
 	{
-        m_Velocity.y += G * deltaTime;
-        vec3 currentPos = transform->GetPosition();
-
-        vec3 newPos = currentPos;
-        newPos.y += m_Velocity.y * deltaTime;
-
-        transform->SetPosition(newPos);
+        m_Acceleration.y += G;
 	}
+
     m_Velocity += m_Acceleration * deltaTime;
+
     vec3 currentPos = transform->GetPosition();
-    vec3 newPos = currentPos;
-    newPos += m_Velocity * deltaTime;
+    vec3 newPos = currentPos + m_Velocity * deltaTime;
     transform->SetPosition(newPos);
     
+    m_Acceleration = { 0.0f, 0.0f, 0.0f };
 }
 
 void Rigidbody::AddForce(vec3 dir , float mag)

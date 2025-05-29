@@ -31,7 +31,7 @@ std::vector<vec3> Collider::GetWorldVertices() const
 std::vector<vec3> Collider::GetAxes()
 {
     std::vector<vec3> vertices = GetWorldVertices();
-    std::vector<vec3> axes = GetWorldVertices();
+    std::vector<vec3> axes;
     for (int i = 0; i < vertices.size(); i++)
     {
         vec3 a = vertices[i];
