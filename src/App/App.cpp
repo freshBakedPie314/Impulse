@@ -23,13 +23,14 @@ int main()
 	a->AddComponent<Transform>("Transform", vec3{ 0.0f, 0.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
 	a->AddComponent<Rigidbody>("Rigidbody");
 	a->GetComponent<Rigidbody>("Rigidbody")->m_UseGravity = false;
+	//a->GetComponent<Rigidbody>("Rigidbody")->m_IsStatic = true;
 	a->AddComponent<Collider>("Collider");
 	Transform* rb = a->GetComponent<Transform>("Transform");
 	currentScene->AddEntity("A", std::move(a));
 
-	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::SQUARE);
+	std::unique_ptr <Entity> b = std::make_unique<Entity>(Shape::TRIANGLE);
 	b->GetShader()->SetUniform4f("u_color", 0.898f, 0.239f, 0.0f, 1.0f);
-	b->AddComponent<Transform>("Transform", vec3{ 0.8f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
+	b->AddComponent<Transform>("Transform", vec3{ 0.7f, 2.0f, 0.0f }, vec3{ 0.0 , 0.0, 0.1f }, vec3{ 1.0f , 1.0f ,1.0f });
 	b->AddComponent<Rigidbody>("Rigidbody");
 	b->AddComponent<Collider>("Collider");
 	currentScene->AddEntity("B", std::move(b));

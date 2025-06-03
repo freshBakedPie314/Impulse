@@ -39,7 +39,59 @@ void PhysicsSystem::Update(Scene* scenes, float deltaTime)
 			std::vector<vec3> worldVerticesA = colliderA->GetWorldVertices();
 			std::vector<vec3> worldVerticesB = colliderB->GetWorldVertices();
 
-			// Get collision info with MTV
+			vec3 posA = entityA->GetComponent<Transform>("Transform")->GetPosition();
+			vec3 posB = entityB->GetComponent<Transform>("Transform")->GetPosition();
+			
+			if (entityA->m_Shape == Shape::CIRCLE && entityB->m_Shape == Shape::CIRCLE)
+			{
+				vec3 posA = entityA->GetComponent<Transform>("Transform")->GetPosition();
+				vec3 posB = entityB->GetComponent<Transform>("Transform")->GetPosition();
+
+				float radius = 0.5f;
+
+				float distance = (posB - posA).length();
+				vec3 axis = normalize(posB - posA);
+
+				if (distance <= 1.0f)
+				{
+					std::cout << "Collided\n";
+				}
+
+				worldVerticesA = { posA + (axis * radius), posA - (axis * radius) };
+				worldVerticesB = { posB + (axis * radius), posB - (axis * radius) };
+
+				axesA = { axis };
+				axesB = {};
+			}
+			else if (entityA->m_Shape == Shape::CIRCLE)
+			{
+				vec3 posA = entityA->GetComponent<Transform>("Transform")->GetPosition();
+				float radius = 0.5f;
+
+				vec3 closestPoint = ClosestPointInPolygon(worldVerticesB, posA);
+				vec3 additionalAxis = closestPoint - posA;
+				additionalAxis = normalize(additionalAxis);
+
+				axesA = {};
+				axesB.push_back(additionalAxis);
+			}
+			else if (entityB->m_Shape == Shape::CIRCLE)
+			{
+				vec3 posB = entityB->GetComponent<Transform>("Transform")->GetPosition();
+				float radius = 0.5f;
+
+				vec3 closestPoint = ClosestPointInPolygon(worldVerticesA, posB);
+				vec3 additionalAxis = closestPoint - posB;
+				additionalAxis = normalize(additionalAxis);
+
+				axesB = {};
+				axesA.push_back(additionalAxis);
+			}
+			else
+			{
+				;
+			}
+
 			CollisionInfo collisionInfo = GetMTV(worldVerticesA, worldVerticesB, axesA, axesB);
 
 			if (collisionInfo.penetration > 0.0f) // Collision detected
@@ -47,18 +99,62 @@ void PhysicsSystem::Update(Scene* scenes, float deltaTime)
 				collisionInfo.entityA = entityA;
 				collisionInfo.entityB = entityB;
 
-				//std::cout << "Penetration: " << collisionInfo.penetration << std::endl;
 				ResolveCollision(collisionInfo);
 			}
+			
 		}
 
 	}
 }
 
+vec3 PhysicsSystem::ClosestPointInLineSegment(const vec3& a, const vec3& b, const vec3& point)
+{
+	vec3 segment = b - a;
+	vec3 toPoint = point - a;
+
+	float t = dot(toPoint, segment) / segment.sqMagnitude();
+	t = std::clamp(t, 0.0f, 1.0f);
+
+	return a + segment * t;
+}
+
+vec3 PhysicsSystem::ClosestPointInPolygon(const std::vector<vec3>& vertices, const vec3& point)
+{
+	if (vertices.empty()) return vec3(0, 0, 0);
+
+	float closestDistSq = (point - vertices[0]).sqMagnitude();
+	vec3 closestPoint = vertices[0];
+
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		const vec3& a = vertices[i];
+		const vec3& b = vertices[(i + 1) % vertices.size()];
+
+		vec3 pointOnSegment = ClosestPointInLineSegment(a, b, point);
+		float distSq = (pointOnSegment - point).sqMagnitude();
+
+		if (distSq < closestDistSq)
+		{
+			closestDistSq = distSq;
+			closestPoint = pointOnSegment;
+		}
+
+		float vertexDistSq = (a - point).sqMagnitude();
+		if (vertexDistSq < closestDistSq)
+		{
+			closestDistSq = vertexDistSq;
+			closestPoint = a;
+		}
+	}
+
+	return closestPoint;
+}
+
 CollisionInfo PhysicsSystem::GetMTV(const std::vector<vec3>& verticesA,
 									const std::vector<vec3>& verticesB,
 									const std::vector<vec3>& axesA,
-									const std::vector<vec3>& axesB) const
+									const std::vector<vec3>& axesB,
+									const Entity* circle) const
 {
 	CollisionInfo info;
 	float minOverlap = FLT_MAX;
@@ -74,8 +170,8 @@ CollisionInfo PhysicsSystem::GetMTV(const std::vector<vec3>& verticesA,
 
 		vec3 normalizedAxis = normalize(axis);
 
-		Projection projA = ProjectVertices(verticesA, normalizedAxis);
-		Projection projB = ProjectVertices(verticesB, normalizedAxis);
+		Projection projA = ProjectVertices(verticesA, normalizedAxis , circle);
+		Projection projB = ProjectVertices(verticesB, normalizedAxis, circle);
 
 		if (!IsOverlapping(projA, projB))
 		{
@@ -109,12 +205,20 @@ CollisionInfo PhysicsSystem::GetMTV(const std::vector<vec3>& verticesA,
 	return info;
 }
 
-Projection PhysicsSystem::ProjectVertices(const std::vector<vec3>& vertices, const vec3& axis) const
+Projection PhysicsSystem::ProjectVertices(const std::vector<vec3>& vertices, const vec3& axis, const Entity* circle) const
 {
 	if (vertices.empty())
 	{
-		std::cout << "Empty vertices" << std::endl;
-		return { 0.0f , 0.0f };
+		vec3 circleCenter = circle->GetComponent<Transform>("Transform")->GetPosition();
+		float circleRadius = 0.5f;
+		// Handle circle case
+		if (axis.length() > 0.001f)
+		{
+			vec3 normalizedAxis = normalize(axis);
+			float projection = dot(circleCenter, normalizedAxis);
+			return { projection - circleRadius, projection + circleRadius };
+		}
+		return { 0.0f, 0.0f };
 	}
 
 	//Point
@@ -187,12 +291,16 @@ void PhysicsSystem::ResolveCollision(const CollisionInfo& collision)
 		float vA = (uA_ * (mA - mB) + 2.0f * mB * uB_) / (mA + mB);
 		float vB = (uB_ * (mB - mA) + 2.0f * mA * uA_) / (mA + mB);
 
-		// Change in normal component
+		// Change in line of action component
 		float deltaVA = vA - uA_;
 		float deltaVB = vB - uB_;
 
 		// Apply changes along the normal, dont disturb the normal velocity components
 		rbA->m_Velocity += lineOfAction * deltaVA;
 		rbB->m_Velocity += lineOfAction * deltaVB;
+	}
+	else
+	{
+		std::cout << "No Rigidbody attached to the entity with collider" << std::endl;
 	}
 }

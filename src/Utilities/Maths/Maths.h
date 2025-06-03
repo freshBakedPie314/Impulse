@@ -17,6 +17,11 @@ struct vec3 {
 		return std::sqrt((x * x) + (y * y) + (z * z));
 	}
 
+	float sqMagnitude() const
+	{
+		return (x * x) + (y * y);
+	}
+
 	float length() const
 	{
 		return magnitude();
@@ -25,6 +30,11 @@ struct vec3 {
 	vec3 operator-(vec3 other) const
 	{
 		return vec3(x - other.x, y - other.y, z - other.z);
+	}
+
+	vec3 operator+(vec3 other) const
+	{
+		return vec3(x + other.x, y + other.y, z + other.z);
 	}
 
 	vec3& operator-=(const vec3& other) {

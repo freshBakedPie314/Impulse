@@ -28,10 +28,12 @@ private:
 	std::unique_ptr<IndexBuffer> m_IBO;
 	std::unique_ptr<Shader> m_Shader;
 	std::vector<float> m_localVertices;
-
+	
 public:
 	Entity(Shape shape);
 	~Entity();
+
+	Shape m_Shape;
 
 	std::vector<float> GetVetices(Shape shape);
 	std::vector<unsigned int> GetIndices(Shape shape);

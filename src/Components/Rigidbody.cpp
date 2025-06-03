@@ -2,6 +2,8 @@
 
 void Rigidbody::PhysicsUpdate(Transform* transform, float deltaTime)
 {
+    if (m_IsStatic) return;
+
 	if (m_UseGravity)
 	{
         m_Acceleration.y += G;

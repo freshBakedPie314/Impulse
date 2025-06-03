@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(Shape shape)
+Entity::Entity(Shape shape): m_Shape(shape)
 {
 	std::vector<float> vertices = GetVetices(shape);
 	std::vector<unsigned int> indices = GetIndices(shape);;
